@@ -16,8 +16,19 @@ fn main() {
     let binary_vector = string_to_binary_vector(s);
     println!("{:?}", binary_vector);
 
-    let string = binary_vector_to_string(binary_vector);
+    let string = binary_vector_to_string(&binary_vector);
     println!("{:?}", string);
+    println!("{:?}", binary_vector);
+
+    let dog = Dog {
+        name: String::from("Rusty"),
+    };
+    let cat = Cat {
+        name: String::from("Banny"),
+    };
+
+    dog.speak();
+    cat.speak();
 }
 
 fn string_to_binaries(s: &str) -> String {
@@ -33,7 +44,7 @@ fn string_to_binary_vector(s: &str) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
-fn binary_vector_to_string(binary_vector: Vec<String>) -> String {
+fn binary_vector_to_string(binary_vector: &[String]) -> String {
     binary_vector
         .iter()
         .map(|binary| {
@@ -41,4 +52,28 @@ fn binary_vector_to_string(binary_vector: Vec<String>) -> String {
             char::from_u32(decimal as u32).unwrap()
         })
         .collect()
+}
+
+trait Speak {
+    fn speak(&self);
+}
+
+struct Dog {
+    name: String,
+}
+
+struct Cat {
+    name: String,
+}
+
+impl Speak for Dog {
+    fn speak(&self) {
+        println!("{} says woof!", self.name);
+    }
+}
+
+impl Speak for Cat {
+    fn speak(&self) {
+        println!("{} says meow!", self.name);
+    }
 }
